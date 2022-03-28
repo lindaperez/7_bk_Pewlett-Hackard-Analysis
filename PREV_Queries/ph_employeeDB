@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS Departments CASCADE;
 DROP TABLE IF EXISTS Salaries;
-DROP TABLE IF EXISTS Title;
+DROP TABLE IF EXISTS Titles;
 DROP TABLE IF EXISTS Employees CASCADE;
 DROP TABLE IF EXISTS Dept_Emp CASCADE;
 DROP TABLE IF EXISTS dept_manager CASCADE;
@@ -8,9 +8,10 @@ DROP TABLE IF EXISTS dept_manager CASCADE;
 
 CREATE TABLE IF NOT EXISTS Departments(
 		--dept_no INTEGER CONSTRAINT dept_pk PRIMARY KEY,
-		dept_no INTEGER NOT NULL,
-	 	dept_name varchar(200) NOT NULL,
-	PRIMARY KEY (dept_no)
+		dept_no varchar(4) NOT NULL,
+	 	dept_name varchar(40) NOT NULL,
+	PRIMARY KEY (dept_no),
+	UNIQUE (dept_name)
 );
 CREATE TABLE IF NOT EXISTS Employees(
 		emp_no INTEGER NOT NULL,
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Employees(
 
 CREATE TABLE IF NOT EXISTS Dept_Emp (
 	emp_no INTEGER NOT NULL,
-	dept_no INTEGER NOT NULL,
+	dept_no varchar(4) NOT NULL,
 	front_date date NOT NULL,
 	to_date date NOT NULL,
 FOREIGN KEY (emp_no) REFERENCES Employees (emp_no),
@@ -40,22 +41,26 @@ CREATE TABLE IF NOT EXISTS Salaries (
 	FOREIGN KEY (emp_no) REFERENCES Employees (emp_no),
 	PRIMARY KEY (emp_no)
 );
-CREATE TABLE IF NOT EXISTS Title (
+CREATE TABLE IF NOT EXISTS Titles (
 	emp_no INTEGER NOT NULL,
 	title varchar NOT NULL,
 	from_date date NOT NULL,
 	to_date date NOT NULL,
 	FOREIGN KEY (emp_no) REFERENCES Employees (emp_no),
-	PRIMARY KEY (emp_no)
+	PRIMARY KEY (emp_no, title,from_date)
 );
 CREATE TABLE IF NOT EXISTS dept_manager(
-	dept_no INTEGER NOT NULL,
+	dept_no varchar(4) NOT NULL,
 	emp_no INTEGER NOT NULL,
 	from_date date NOT NULL,
 	to_date date NOT NULL,
 	FOREIGN KEY (dept_no) REFERENCES Departments (dept_no),
 	PRIMARY KEY (dept_no, emp_no)
 );
+ALTER TABLE IF EXISTS Departments
+	ADD UNIQUE (dept_name);
+
+
 
 -- /*Alter table */
 -- ALTER TABLE IF EXISTS Departments
@@ -103,12 +108,6 @@ CREATE TABLE IF NOT EXISTS dept_manager(
 -- 	FOREIGN KEY (emp_no) REFERENCES Employees (emp_no);
 	
 	
-SELECT * FROM Departments;	
-SELECT * FROM Employees;	
-SELECT * FROM Salaries;	
-SELECT * FROM Title;
-SELECT * FROM Dept_emp;
-SELECT * FROM dept_manager;	
 
 	
 	
