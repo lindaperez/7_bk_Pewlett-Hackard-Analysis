@@ -26,11 +26,18 @@ January 1, 1952 and December 31, 1955 including employees who were already
 retired and some employees have more that one job title because they have switched titles over the years. The total of this particular multiset of employees retired
 and not retired is 133.776.
 
+
+![retirement_titles.csv](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/derivable_1_ALL.png)
+
+
 To remove this duplicates the file  unique_titles.csv was created:
 
 - unique_titles.csv Provides employees with their job titles who aren't retired
 yet who were born between  January 1, 1952 and December 31, 1955. The total
 amount of this employees with titles is 72458
+
+
+![unique_titles.csv](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/derivable_1_2_unique.png)
 
 To organize better the distribution of employees and titles the filledretiring_titles.csv was created:
 
@@ -41,11 +48,16 @@ Retiring Employees by Job Title is 72458 and the list of title includes
 the set of {"Senior Engineer", "Senior Staff", "Engineer", "Staff",
 "Technique Leader", "Assistant Engineer", "Manager" }
 
+![retiring_titles.csv ](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/derivable_1_3.png)
+
+
  To hold the employees who are eligible to participate in a mentorship program
 the file mentorship_eligibilty.csv was created
 
 - mentorship_eligibilty.csv Provides the Mentorship Eligibility table for current employees who were born between January 1, 1965 and December 31, 1965.
 The total mentorship is 1549
+
+![mentorship_eligibilty.csv ](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/derivable_2.png)
 
 ## Summary
 
@@ -53,18 +65,11 @@ The total mentorship is 1549
 
   The amount of roles that need to be filled is 72458
 
-  SELECT COUNT ( DISTINCT u.emp_no)
-  FROM unique_titles u
-
+![impact_query](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/summary_1.png)
 
 - Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
 
   No, there are only 1549
+  
+![qualified_query](https://github.com/lindaperez/pewlett-hackard-analysis/blob/main/images/summary_2.png)
 
-
-  SELECT COUNT(DISTINCT (e.emp_no))
-  FROM employees e
-  LEFT JOIN dept_emp de ON de.emp_no = e.emp_no
-  LEFT JOIN  titles tt ON tt.emp_no = de.emp_no
-  WHERE tt.to_date = '9999-01-01' AND
-  e.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
